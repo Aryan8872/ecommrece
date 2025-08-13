@@ -24,14 +24,14 @@ const Login = () => {
   }
 
   const handleLogin = async() => {
-    const res = await login(userData)
+     await login(userData)
 
   }
   return (
     <div className='bg-[#0F0F0F] min-h-screen flex justify-center items-center'>
       <div className='bg-[#181818] p-6 rounded-lg w-md'>
         <div className="text-center">
-          <span className="text-white font-medium text-2xl">Welcome Back</span>
+          <span className="text-white font-medium text-2xl">Welcome</span>
           <p className="text-white mt-2"><span>Dont have an account?</span> <span className="font-semibold">Signup</span></p>
         </div>
         <div className='w-full flex flex-col gap-6 mt-10'>
