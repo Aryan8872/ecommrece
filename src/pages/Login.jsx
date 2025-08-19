@@ -25,7 +25,6 @@ const Login = () => {
 
   const handleLogin = async() => {
      await login(userData)
-
   }
   return (
     <div className='bg-[#0F0F0F] min-h-screen flex justify-center items-center'>
