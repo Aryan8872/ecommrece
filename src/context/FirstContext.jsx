@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,31 +8,16 @@ const FirstContextProvider = ({ children }) => {
     const [userRole, setUserRole] = useState("")   //ADMIN USER duita role 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const navigate = useNavigate()
-    const dbData = {
-        username: "hello",
-        password: "hello123",
-        role: "ADMIN"
-    }
+  
 
-    const login = (userData) => {
-        console.log(userData)
-        const proms = new Promise((resolve, reject) => {
-            if (userData.email == "user@gmail.com"|"hello@gmail.com" && userData.password=="dmnamwndmn") {
-                console.log("resolved")
-                resolve("hello")
-            } else {
-                console.log("rejected ")
-                reject("bye")
-            }
-        })
-        proms.then(() => {
-            console.log("setting true")
-            setIsAuthenticated(true)
-            navigate("/")
-        }).catch(() => {
-            console.log("setting false")
-            setIsAuthenticated(false)
-        })
+    const login = async(userData) => {
+        try{
+            const loginreq = await axios.post("http://localhost:8080/api/user/login",userData)
+            console.log(loginreq)
+        }
+        catch(e){
+            console.log(e)
+        }
     }
 
     const logout = () => {
