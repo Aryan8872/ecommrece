@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
+import { useFirst } from "../context/FirstContext"
 import SwiperComp from "./SwiperComp"
 
 const FlashSale = () => {
-    
+    const { alluser } = useFirst()
 
     const productData = [
         {
@@ -68,7 +68,7 @@ const FlashSale = () => {
 
     ]     //database bata ako data haru ani hamile aba yo data
     //  haru card lai papss garnu parxa so that each card ma data janxa ani ui ma dekhinxa
-
+    if (!alluser) return null
     return (
         <div className='container flex flex-col  gap-12 mx-auto px-8 '>
             <div className='flex flex-col gap-3 '>
@@ -95,9 +95,23 @@ const FlashSale = () => {
                     View All Categories
                 </button>
 
-
             </div>
+            <div>
+                <span>All users data</span>
+                <section>
+                    {
+                        alluser && alluser.map((data, index) => (
+                            <>
+                                <span>{data._id}</span>
+                                <span>{data.email}</span>
+                                <span>{data.username}</span>
+                                <span>{data.password}</span>
 
+                            </>
+                        ))
+                    }
+                </section>
+            </div>
         </div>
     )
 }

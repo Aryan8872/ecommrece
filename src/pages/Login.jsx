@@ -4,17 +4,18 @@ import Apple from "../assets/apple.svg";
 import Google from "../assets/google.svg";
 import Twitter from "../assets/twitter.svg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFirst } from '../context/FirstContext';
 
 const Login = () => {
   const { login } = useFirst()
   const [userData, setUserData] = useState({ email: "", password: "" })
 
+
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    setUserData((prev) =>  (
+    setUserData((prev) => (
       {
         ...prev,
         [name]: value
@@ -23,8 +24,8 @@ const Login = () => {
 
   }
 
-  const handleLogin = async() => {
-     await login(userData)
+  const handleLogin = async () => {
+    await login(userData)
   }
   return (
     <div className='bg-[#0F0F0F] min-h-screen flex justify-center items-center'>
@@ -36,11 +37,11 @@ const Login = () => {
         <div className='w-full flex flex-col gap-6 mt-10'>
           <div className='flex items-center p-2 gap-5 bg-[#111111] shadow-md text-white rounded-md'>
             <FaMailchimp />
-            <input className='w-full outline-none' name="email" onChange={(e)=>handleChange(e)} placeholder='Email address' />
+            <input className='w-full outline-none' name="email" onChange={(e) => handleChange(e)} placeholder='Email address' />
           </div>
           <div className='flex items-center p-2 gap-5 bg-[#111111] shadow-md text-white rounded-md'>
             <RiLockPasswordLine />
-            <input className='w-full outline-none' name="password" onChange={(e)=>handleChange(e)} placeholder='Password' />
+            <input className='w-full outline-none' name="password" onChange={(e) => handleChange(e)} placeholder='Password' />
           </div>
 
           <button className="w-full cursor-pointer hover:bg-blue-600 rounded-md bg-blue-500 text-white p-2 font-medium" onClick={handleLogin}>Login</button>

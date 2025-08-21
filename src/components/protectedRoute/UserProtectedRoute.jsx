@@ -1,19 +1,14 @@
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
-import { useFirst } from '../../context/FirstContext'
-import { useEffect } from 'react'
+import { Navigate } from "react-router-dom";
+import { useFirst } from "../../context/FirstContext";
 
-const UserProtectedRoute = () => {
-    const { isAuthenticated } = useFirst()
-    useEffect(()=>{
-        console.log(isAuthenticated)
-    },[isAuthenticated])
+const ProtectAuthRoute = ({ children }) => {
+    const { isAuthenticated } = useFirst();
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login"/>
+    if (isAuthenticated) {
+        return <Navigate to="/" replace />;
     }
-    return (
-        <Outlet />
-    )
-}
 
-export default UserProtectedRoute
+    return <>{children}</>;
+};
+
+export default ProtectAuthRoute;

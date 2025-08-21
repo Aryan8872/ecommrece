@@ -3,22 +3,34 @@ import MainLayout from '../components/layout/MainLayout'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
-import UserProtectedRoute from '../components/protectedRoute/UserProtectedRoute'
+import ProtectedRouteUser from '../context/AuthContext'
+import ProtectAuthRoute from '../components/protectedRoute/UserProtectedRoute'
 
 const Router = () => {
     return (
         <Routes>
-            <Route element={<UserProtectedRoute/>}>
+            <Route element={<ProtectedRouteUser />}>
                 <Route path='/' element={<MainLayout />}>
                     <Route index element={<Home />} />
-                    <Route path='register' element={<Register />} />
-
                 </Route>
             </Route>
 
-            <Route path='/login' element={<Login />} />
-
-
+            <Route
+                path='/login'
+                element={
+                    <ProtectAuthRoute>
+                        <Login />
+                    </ProtectAuthRoute>
+                }
+            />
+            <Route
+                path='/register'
+                element={
+                    <ProtectAuthRoute>
+                        <Register />
+                    </ProtectAuthRoute>
+                }
+            />
         </Routes>
     )
 }

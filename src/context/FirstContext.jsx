@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -8,8 +8,11 @@ const FirstContext = createContext()
 const FirstContextProvider = ({ children }) => {
     const [userRole, setUserRole] = useState("")   //ADMIN USER duita role 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [alluser, setAlluser] = useState()
     const navigate = useNavigate()
-
+    useEffect(() => {
+        getAllUsers()
+    }, [])
 
     const login = async (userData) => {
         try {
@@ -24,6 +27,15 @@ const FirstContextProvider = ({ children }) => {
             console.log(e)
         }
     }
+    const getAllUsers = async () => {
+        try {
+            const res = await axios.get("http://localhost:8080/api/user/all")
+            setAlluser(res.data.users)
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
 
     const logout = () => {
         //do logout logic
@@ -34,7 +46,7 @@ const FirstContextProvider = ({ children }) => {
     }
 
     return (
-        <FirstContext.Provider value={{ isAuthenticated, login, logout }}>
+        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser }}>
             {children}
         </FirstContext.Provider>
     )
