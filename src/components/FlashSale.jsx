@@ -1,9 +1,10 @@
+import { useState } from "react"
 import { useFirst } from "../context/FirstContext"
 import SwiperComp from "./SwiperComp"
 
 const FlashSale = () => {
-    const { alluser } = useFirst()
-
+    const { alluser, deleteUser } = useFirst()
+    const [showDelete, setShowDelete] = useState(false)
     const productData = [
         {
             name: "Product 1",
@@ -102,10 +103,43 @@ const FlashSale = () => {
                     {
                         alluser && alluser.map((data, index) => (
                             <>
-                                <span>{data._id}</span>
-                                <span>{data.email}</span>
-                                <span>{data.username}</span>
-                                <span>{data.password}</span>
+                                <div className="flex gap-3 items-center">
+                                    <span>{index}</span>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="font-bold text-lg">{data.email}</span>
+                                        <span className="">{data.username}</span>
+                                    </div>
+                                    <button className="text-white bg-red-400 rounded-lg px-5 py-3 cursor-pointer"
+                                        onClick={() => {
+                                            setShowDelete(true)
+                                        }}>
+                                        Delete
+                                    </button>
+                                    {
+                                        showDelete == true &&
+                                        (
+                                            <div className="fixed inset-0 z-[9999] bg-black/30 w-full h-full">
+                                                <div className="absolute left-[30%] top-[30%] flex flex-col bg-white gap-5 w-[45%] p-6">
+                                                    <span>are you sure you want to delete the data of user {data.email}?</span>
+                                                    <div className="flex justify-between w-full">
+                                                        <button className="text-white p-2 shadow-md bg-red-300"
+                                                            onClick={() =>{ deleteUser(data._id)
+                                                                setShowDelete(false)
+                                                            }
+
+                                                            }>
+                                                            Delete
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setShowDelete(false)}
+                                                            className="p-2 shadow-md">cancel</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        )
+                                    }
+                                </div>
 
                             </>
                         ))

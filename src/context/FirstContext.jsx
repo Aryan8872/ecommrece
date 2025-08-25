@@ -37,6 +37,15 @@ const FirstContextProvider = ({ children }) => {
         }
     }
 
+    const deleteUser = async (id) => {
+        try {
+            const res = await axios.delete(`http://localhost:8080/api/user/delete/${id}`)
+            toast.success(res.data.message)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const logout = () => {
         //do logout logic
         setIsAuthenticated(false)
@@ -46,7 +55,7 @@ const FirstContextProvider = ({ children }) => {
     }
 
     return (
-        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser }}>
+        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser,deleteUser }}>
             {children}
         </FirstContext.Provider>
     )
