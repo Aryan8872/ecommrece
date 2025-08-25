@@ -45,6 +45,17 @@ const FirstContextProvider = ({ children }) => {
             console.log(e)
         }
     }
+    const updateUser = async (updateData) => {
+        try {
+            console.log(updateData)
+            const res = await axios.put(`http://localhost:8080/api/user/update/${updateData._id}`,updateData)
+            toast.success(res.data.message)
+        }
+        catch (e) {
+            toast.error(e.response.data.message)
+            console.log(e)
+        }
+    }
 
     const logout = () => {
         //do logout logic
@@ -55,7 +66,7 @@ const FirstContextProvider = ({ children }) => {
     }
 
     return (
-        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser,deleteUser }}>
+        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser, deleteUser,updateUser }}>
             {children}
         </FirstContext.Provider>
     )
