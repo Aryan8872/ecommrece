@@ -5,6 +5,7 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import ProtectedRouteUser from '../context/AuthContext'
 import ProtectAuthRoute from '../components/protectedRoute/UserProtectedRoute'
+import UserDetail from '../components/UserDetail'
 
 const Router = () => {
     return (
@@ -12,6 +13,8 @@ const Router = () => {
             <Route element={<ProtectedRouteUser />}>
                 <Route path='/' element={<MainLayout />}>
                     <Route index element={<Home />} />
+
+                    <Route path='/user/:id' element={<UserDetail/>}/>
                 </Route>
             </Route>
 

@@ -2,12 +2,14 @@ import { useState } from "react"
 import { useFirst } from "../context/FirstContext"
 import SwiperComp from "./SwiperComp"
 import UpdateUser from "./UpdateUser"
+import { useNavigate } from "react-router-dom"
 
 const FlashSale = () => {
-    const { alluser, deleteUser } = useFirst()
+    const { alluser, deleteUser,getUserById } = useFirst()
     const [showDelete, setShowDelete] = useState(false)
     const [showUpdate, setShowUpdate] = useState(false)
     const [updateData, setUpdateData] = useState()
+    const navigate = useNavigate()
     const productData = [
         {
             name: "Product 1",
@@ -125,6 +127,11 @@ const FlashSale = () => {
                                             setShowUpdate(true)
 
                                         }}>Update</button>
+
+                                        <button onClick={()=>{
+                                            navigate(`/user/${data._id}`)
+                                        }}>Show page</button>
+                                        
                                         {
                                             showDelete == true &&
                                             (

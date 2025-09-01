@@ -9,7 +9,9 @@ const FirstContextProvider = ({ children }) => {
     const [userRole, setUserRole] = useState("")   //ADMIN USER duita role 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [alluser, setAlluser] = useState()
+    const [userById,setUserById] = useState()
     const navigate = useNavigate()
+
     useEffect(() => {
         getAllUsers()
     }, [])
@@ -48,10 +50,22 @@ const FirstContextProvider = ({ children }) => {
     const updateUser = async (updateData) => {
         try {
             console.log(updateData)
-            const res = await axios.put(`http://localhost:8080/api/user/update/${updateData._id}`,updateData)
+            const res = await axios.put(`http://localhost:8080/api/user/update/${updateData._id}`, updateData)
             toast.success(res.data.message)
         }
         catch (e) {
+            toast.error(e.response.data.message)
+            console.log(e)
+        }
+    }
+
+    const getUserById = async (id) => {
+        try {
+            const res = await axios.get(`http://localhost:8080/api/user/detail/${id}`)
+            setUserById(res.data.user)
+            console.log("trigerred")
+
+        } catch (e) {
             toast.error(e.response.data.message)
             console.log(e)
         }
@@ -66,7 +80,7 @@ const FirstContextProvider = ({ children }) => {
     }
 
     return (
-        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser, deleteUser,updateUser }}>
+        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser, deleteUser, updateUser,getUserById,userById }}>
             {children}
         </FirstContext.Provider>
     )
