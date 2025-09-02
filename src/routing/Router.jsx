@@ -13,7 +13,6 @@ const Router = () => {
             <Route element={<ProtectedRouteUser />}>
                 <Route path='/' element={<MainLayout />}>
                     <Route index element={<Home />} />
-
                     <Route path='/user/:id' element={<UserDetail/>}/>
                 </Route>
             </Route>

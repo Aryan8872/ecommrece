@@ -6,10 +6,11 @@ import { toast } from "react-toastify";
 const FirstContext = createContext()
 
 const FirstContextProvider = ({ children }) => {
-    const [userRole, setUserRole] = useState("")   //ADMIN USER duita role 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [isLoading, setisLoading] = useState(false)
+    const [user, setUser] = useState(null)
     const [alluser, setAlluser] = useState()
-    const [userById,setUserById] = useState()
+    const [userById, setUserById] = useState()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -20,6 +21,7 @@ const FirstContextProvider = ({ children }) => {
         try {
             const loginreq = await axios.post("http://localhost:8080/api/user/login", userData)
             console.log(loginreq)
+            setUser(loginreq.data.user)
             setIsAuthenticated(true)
             toast.success(loginreq.data.message)
         }
@@ -80,7 +82,7 @@ const FirstContextProvider = ({ children }) => {
     }
 
     return (
-        <FirstContext.Provider value={{ isAuthenticated, login, logout, getAllUsers, alluser, deleteUser, updateUser,getUserById,userById }}>
+        <FirstContext.Provider value={{ isAuthenticated, user, isLoading, login, logout, getAllUsers, alluser, deleteUser, updateUser, getUserById, userById }}>
             {children}
         </FirstContext.Provider>
     )
