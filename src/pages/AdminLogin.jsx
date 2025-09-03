@@ -5,10 +5,12 @@ import Google from "../assets/google.svg";
 import Twitter from "../assets/twitter.svg";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFirst } from '../context/FirstContext';
 
 const AdminLogin = () => {
-    const { login } = useFirst()
+    const { login, verifyAdmin } = useFirst()
+    const navigate = useNavigate()
     const [userData, setUserData] = useState({ email: "", password: "" })
     
     const handleChange = (e) => {
@@ -25,6 +27,11 @@ const AdminLogin = () => {
 
     const handleLogin = async () => {
         await login(userData)
+        const isAdmin = await verifyAdmin()
+        if (!isAdmin) {
+            throw new Error("Not an admin")
+        }
+        navigate("/")
     }
     return (
         <div className='bg-[#0F0F0F] min-h-screen flex justify-center items-center'>

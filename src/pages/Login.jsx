@@ -4,11 +4,13 @@ import Apple from "../assets/apple.svg";
 import Google from "../assets/google.svg";
 import Twitter from "../assets/twitter.svg";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFirst } from '../context/FirstContext';
 
 const Login = () => {
   const { login } = useFirst()
+  const navigate = useNavigate()
   const [userData, setUserData] = useState({ email: "", password: "" })
 
 
@@ -26,6 +28,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     await login(userData)
+    navigate('/');
   }
   return (
     <div className='bg-[#0F0F0F] min-h-screen flex justify-center items-center'>
